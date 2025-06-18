@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>株式投資プラットフォーム</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(45deg, #f093fb 0%, #f5576c 100%);
+            --shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            --transition-smooth: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            --breathing-animation: breathing 2s ease-in-out infinite;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            background: #f9fafb;
+        }
+
+        .image-container-responsive {
+            width: 100%;
+            border-radius: 0;
+            overflow: hidden;
+            transition: var(--transition-smooth);
+        }
+
+        .image-container-responsive:hover {
+            transform: scale(1.01);
+        }
+
+        .image-element-adaptive {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        .floating-contact-button {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1000;
+            background: var(--secondary-gradient);
+            color: white;
+            border: none;
+            padding: 1rem 2rem;
+            border-radius: 50px;
+            font-size: 1.1rem;
+            font-weight: 600;
+            cursor: pointer;
+            box-shadow: var(--shadow-lg);
+            animation: var(--breathing-animation);
+            transition: var(--transition-smooth);
+        }
+
+        .floating-contact-button:hover {
+            transform: translateX(-50%) scale(1.05);
+            animation-play-state: paused;
+        }
+
+        @keyframes breathing {
+            0%, 100% {
+                transform: translateX(-50%) scale(1);
+                box-shadow: var(--shadow-lg);
+            }
+            50% {
+                transform: translateX(-50%) scale(1.05);
+                box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+            }
+        }
+
+        @media (max-width: 768px) {
+            .floating-contact-button {
+                padding: 0.8rem 1.5rem;
+                font-size: 1rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main role="main">
+        <div class="image-container-responsive">
+            <img src="img/00.png" alt="1" class="image-element-adaptive">
+        </div>
+
+        <div class="image-container-responsive">
+            <img src="img/01.png" alt="1" class="image-element-adaptive">
+        </div>
+
+        <div class="image-container-responsive">
+            <img src="img/02.png" alt="1" class="image-element-adaptive">
+        </div>
+
+        <div class="image-container-responsive">
+            <img src="img/03.png" alt="1" class="image-element-adaptive">
+        </div>
+
+        <div class="image-container-responsive">
+            <img src="img/04.png" alt="1" class="image-element-adaptive">
+        </div>
+
+        <div class="image-container-responsive">
+            <img src="img/05.png" alt="1" class="image-element-adaptive">
+        </div>
+
+        <div class="image-container-responsive">
+            <img src="img/06.png" alt="1" class="image-element-adaptive">
+        </div>
+
+        <button class="floating-contact-button" onclick="handleContactClick()">
+            今すぐ参加しましょう
+        </button>
+    </main>
+
+    <script>
+        function handleContactClick() {
+           window.location.href="https://www.qq.com";
+        }
+
+        if ('IntersectionObserver' in window) {
+            const imageObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        const img = entry.target;
+                        img.style.transition = 'transform 0.3s ease-in-out';
+                        observer.unobserve(img);
+                    }
+                });
+            });
+
+            document.querySelectorAll('.image-element-adaptive').forEach(img => {
+                imageObserver.observe(img);
+            });
+        }
+
+        let scrollTimeout;
+        window.addEventListener('scroll', () => {
+            if (scrollTimeout) {
+                clearTimeout(scrollTimeout);
+            }
+            scrollTimeout = setTimeout(() => {
+                const scrollTop = window.pageYOffset;
+                const button = document.querySelector('.floating-contact-button');
+                if (scrollTop > 300) {
+                    button.style.opacity = '1';
+                } else {
+                    button.style.opacity = '0.8';
+                }
+            }, 10);
+        });
+    </script>
+</body>
+</html>
